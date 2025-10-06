@@ -12,7 +12,11 @@ const Home = () => {
         className='absolute top-4 left-4 w-40 ml-6 md:ml-12 lg:ml-24 xl:ml-32
         shadow-xl shadow-gray-800/30' />
 
-        {/*  */}
+        {/* Titles */}
+        <div>
+          <h1>Welcome to the real world of skills & experiance!</h1>
+          <p>Connecting students with short, practical projects from companies</p>
+        </div>
     </div>
   )
 }
