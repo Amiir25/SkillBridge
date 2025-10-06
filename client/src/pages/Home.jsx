@@ -27,18 +27,18 @@ const Home = () => {
               Welcome to the real world of skills & experiance!
             </h1>
             <p className='text-2xl mt-8'>
-              Connecting students with short, practical projects from companies
+              Connecting students with short, practical projects from companies.
             </p>
           </div>
 
           {/* Buttons */}
           <div className='mt-10'>
-            <button className='mr-10 text-2xl border px-8 py-2 rounded cursor-pointer
+            <button className='mr-10 w-40 text-2xl border px-8 py-2 rounded cursor-pointer
             hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
               Login
             </button>
 
-            <button className='text-2xl border px-8 py-2 rounded cursor-pointer
+            <button className='w-40 text-2xl border px-8 py-2 rounded cursor-pointer
             hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
               Register
             </button>
