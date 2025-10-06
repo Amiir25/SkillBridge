@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Floating animation on the home page */
-#titles {
+#hero {
   animation: float 20s ease-in-out infinite;
 }
 
