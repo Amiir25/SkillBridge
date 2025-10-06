@@ -8,9 +8,17 @@ const Home = () => {
     className='relative h-screen bg-cover bg-center bg-no-repeat'>
 
         {/* Logo */}
-        <img src="/logo-2.png" alt="SkillBridge logo image"
-        className='absolute top-4 left-4 w-40 ml-6 md:ml-12 lg:ml-24 xl:ml-32
-        shadow-xl shadow-gray-800/30' />
+        <div className='absolute top-4 left-4 ml-6 md:ml-12 lg:ml-24 xl:ml-32
+        flex flex-col items-center'>
+          
+          <img src="/logo-gold.png" alt="SkillBridge logo image"
+          className='w-10' />
+          
+          <p className='text-sm bg-gradient-to-r from-[#b57b0e] via-[#f0c141] to-[#fcf5a2]
+          bg-clip-text text-transparent font-bold'>
+            SkillBridge
+          </p>
+        </div>
 
         <div id='hero' className='h-[95vh] w-200 mx-auto flex flex-col justify-center text-center'>
           {/* Titles */}
