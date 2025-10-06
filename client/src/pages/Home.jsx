@@ -13,7 +13,7 @@ const Home = () => {
         shadow-xl shadow-gray-800/30' />
 
         {/* Titles */}
-        <div>
+        <div className='border h-screen flex flex-col items-center justify-center'>
           <h1>Welcome to the real world of skills & experiance!</h1>
           <p>Connecting students with short, practical projects from companies</p>
         </div>
