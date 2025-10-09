@@ -1,5 +1,7 @@
 import React from 'react'
 import { images } from '../assets/images'
+import { Link } from 'react-router-dom'
+import Logo from '../components/Logo'
 
 const Home = () => {
   return (
@@ -8,18 +10,8 @@ const Home = () => {
     className='relative h-screen bg-cover bg-center bg-no-repeat'>
 
         {/* Logo */}
-        <div className='absolute top-4 left-4 ml-6 md:ml-12 lg:ml-24 xl:ml-32
-        flex flex-col items-center'>
-          
-          <img src="/logo-gold.png" alt="SkillBridge logo image"
-          className='w-10' />
-          
-          <p className='text-sm bg-gradient-to-r from-[#b57b0e] via-[#f0c141] to-[#fcf5a2]
-          bg-clip-text text-transparent font-bold'>
-            SkillBridge
-          </p>
-        </div>
-
+        <Logo/>
+        
         <div id='hero' className='h-[95vh] w-200 mx-auto flex flex-col justify-center text-center'>
           {/* Titles */}
           <div className=' text-gray-900'>
@@ -33,15 +25,19 @@ const Home = () => {
 
           {/* Buttons */}
           <div className='mt-10'>
-            <button className='mr-10 w-40 text-2xl border px-8 py-2 rounded cursor-pointer
-            hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
-              Login
-            </button>
+            <Link to={'login'}>
+              <button className='mr-10 w-40 text-2xl border px-8 py-2 rounded cursor-pointer
+              hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
+                Login
+              </button>
+            </Link>
 
-            <button className='w-40 text-2xl border px-8 py-2 rounded cursor-pointer
-            hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
-              Register
-            </button>
+            <Link to={'/register'}>
+              <button className='w-40 text-2xl border px-8 py-2 rounded cursor-pointer
+              hover:bg-gray-900 hover:text-gray-100 transition-all duration-200'>
+                Register
+              </button>
+            </Link>
           </div>
         </div>
     </section>
