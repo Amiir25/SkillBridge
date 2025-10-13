@@ -3,7 +3,7 @@ import Logo from '../components/Logo'
 
 const Dashboard = () => {
   return (
-    <section>
+    <section className='pb-60'>
 
         <nav className='relative'>
             {/* Logo */}
@@ -21,7 +21,7 @@ const Dashboard = () => {
         flex items-start'>
             {/* Side bar */}
             <div className='flex-1 h-full mt-10 flex flex-col items-start gap-4 py-10 text-lg
-            border-r border-gray-400 '>
+            border-r border-gray-400'>
                 <button className='border border-white px-2 py-1 rounded cursor-pointer
                 hover:border-blue-600 active:opacity-80 transition-all duration-200'>
                     Dashboard
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
                 {/* Overview */}
                 <h1 className='text-4xl font-extrabold underline'>Overview</h1>
-                <div className='mt-10 flex items-center gap-10 '>
+                <div className='mt-6 flex items-center gap-10 '>
                     {/*  */}
                     <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-sky-500
                     shadow-xl'>
@@ -80,6 +80,19 @@ const Dashboard = () => {
                         <h1 className='text-6xl font-bold mb-2'>3.5k</h1>
                         <h1 className='text-xl'>Total Profile Views</h1>
                         <p className='text-xs text-gray-600'>15% increase vs. last month</p>
+                    </div>
+                </div>
+
+                {/* Hiring pipeline */}
+                <div className='mt-20 px-2 py-6 rounded-xl shadow-xl'>
+                    <h1 className='text-4xl font-extrabold underline'>Hiring Pipeline Overview</h1>
+                    <div className='mt-10 flex items-center gap-4'>
+                        {/* --- */}
+                        <div className='px-4 py-4 rounded-2xl w-36 border-b-4 border-sky-500
+                        bg-sky-200 text-center'>
+                            <h1 className='text-4xl font-bold mb-2'>62</h1>
+                            <h1 className=''>New Applicants</h1>
+                        </div>
                     </div>
                 </div>
             </div>
