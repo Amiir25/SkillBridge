@@ -63,9 +63,23 @@ const Dashboard = () => {
                     {/*  */}
                     <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
                     shadow-xl'>
-                        <h1 className='text-7xl font-bold mb-2'>4</h1>
+                        <h1 className='text-6xl font-bold mb-2'>4</h1>
                         <h1 className='text-xl'>Active Posts</h1>
                         <p className='text-xs text-gray-600'>+1 new post this week</p>
+                    </div>
+                    {/*  */}
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    shadow-xl'>
+                        <h1 className='text-6xl font-bold mb-2'>127</h1>
+                        <h1 className='text-xl'>Applications Rec'd</h1>
+                        <p className='text-xs text-gray-600'>15 pending review</p>
+                    </div>
+                    {/*  */}
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    shadow-xl'>
+                        <h1 className='text-6xl font-bold mb-2'>3.5k</h1>
+                        <h1 className='text-xl'>Total Profile Views</h1>
+                        <p className='text-xs text-gray-600'>15% increase vs. last month</p>
                     </div>
                 </div>
             </div>
