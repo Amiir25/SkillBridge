@@ -58,24 +58,14 @@ const Dashboard = () => {
                 </button>
 
                 {/* Overview */}
-                <h1 className='text-4xl font-extralight underline'>Overview</h1>
-                <div className='mt-10 flex items-center gap-10 text-center'>
-                    <div className=''>
-                        <p className='text-7xl text-blue-600 bg-blue-300 w-fit mx-auto font-semibold
-                        px-8 py-2 rounded-xl'>5</p>
-                        <p className='mt-2 text-5xl font-serif'>Projects</p>
-                    </div>
-                    <div>
-                        <div>
-                            <p className='text-3xl text-green-600 bg-green-300 w-fit mx-auto font-semibold
-                        px-6 py-2 rounded-xl'>3</p>
-                            <p className='mt-2 text-2xl font-serif'>Active</p>
-                        </div>
-                        <div>
-                            <p className='text-3xl text-red-600 bg-red-300 w-fit mx-auto font-semibold
-                        px-6 py-2 rounded-xl'>2</p>
-                            <p className='mt-2 text-2xl font-serif'>Closed</p>
-                        </div>
+                <h1 className='text-4xl font-extrabold underline'>Overview</h1>
+                <div className='mt-10 flex items-center gap-10 '>
+                    {/*  */}
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    shadow-xl'>
+                        <h1 className='text-7xl font-bold mb-2'>4</h1>
+                        <h1 className='text-xl'>Active Posts</h1>
+                        <p className='text-xs text-gray-600'>+1 new post this week</p>
                     </div>
                 </div>
             </div>
