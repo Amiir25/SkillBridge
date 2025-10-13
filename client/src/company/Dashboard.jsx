@@ -61,21 +61,21 @@ const Dashboard = () => {
                 <h1 className='text-4xl font-extrabold underline'>Overview</h1>
                 <div className='mt-10 flex items-center gap-10 '>
                     {/*  */}
-                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-sky-500
                     shadow-xl'>
                         <h1 className='text-6xl font-bold mb-2'>4</h1>
                         <h1 className='text-xl'>Active Posts</h1>
                         <p className='text-xs text-gray-600'>+1 new post this week</p>
                     </div>
                     {/*  */}
-                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-indigo-500
                     shadow-xl'>
                         <h1 className='text-6xl font-bold mb-2'>127</h1>
                         <h1 className='text-xl'>Applications Rec'd</h1>
                         <p className='text-xs text-gray-600'>15 pending review</p>
                     </div>
                     {/*  */}
-                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-blue-500
+                    <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-green-500
                     shadow-xl'>
                         <h1 className='text-6xl font-bold mb-2'>3.5k</h1>
                         <h1 className='text-xl'>Total Profile Views</h1>
