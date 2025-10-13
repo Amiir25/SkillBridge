@@ -119,6 +119,43 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Active Job Postings */}
+                <div className='mt-20 px-2 py-6 rounded-xl shadow-xl'>
+                    <h1 className='text-4xl font-extrabold underline'>Active Project Postings</h1>
+                    <table className='mt-10 w-full divide-y divide-gray-500'>
+                        <thead className='bg-gray-200 text-lg text-gray-700'>
+                            <tr>
+                                <th>Project Title</th>
+                                <th>Applications</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className='text-center'>
+                            {/* --- */}
+                            <tr className='font-medium'>
+                                <td>Data Entry</td>
+                                <td><span className='text-cyan-600 font-bold'>52</span> total </td>
+                                <td className='text-green-800 bg-green-200 rounded-full'>Active</td>
+                                <td className='flex items-center justify-center gap-2'>
+                                    <span className='text-sky-500'>Manage</span>
+                                    <span className='text-red-500'>Close</span>
+                                </td>
+                            </tr>
+                            {/* --- */}
+                            <tr className='font-medium'>
+                                <td>Customer Support</td>
+                                <td><span className='text-cyan-600 font-bold'>48</span> total </td>
+                                <td className='text-green-800 bg-green-200 rounded-full'>Active</td>
+                                <td className='flex items-center justify-center gap-2'>
+                                    <span className='text-sky-500'>Manage</span>
+                                    <span className='text-red-500'>Close</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
