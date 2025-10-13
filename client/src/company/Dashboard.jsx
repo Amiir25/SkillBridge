@@ -93,6 +93,30 @@ const Dashboard = () => {
                             <h1 className='text-4xl font-bold mb-2'>62</h1>
                             <h1 className=''>New Applicants</h1>
                         </div>
+                        {/* --- */}
+                        <div className='px-4 py-4 rounded-2xl w-36 border-b-4 border-b-fuchsia-500
+                        bg-fuchsia-200 text-center'>
+                            <h1 className='text-4xl font-bold mb-2'>35</h1>
+                            <h1 className=''>Screening</h1>
+                        </div>
+                        {/* --- */}
+                        <div className='px-4 py-4 rounded-2xl w-36 border-b-4 border-b-indigo-500
+                        bg-indigo-200 text-center'>
+                            <h1 className='text-4xl font-bold mb-2'>18</h1>
+                            <h1 className=''>Interviews</h1>
+                        </div>
+                        {/* --- */}
+                        <div className='px-4 py-4 rounded-2xl w-36 border-b-4 border-b-amber-500
+                        bg-amber-200 text-center'>
+                            <h1 className='text-4xl font-bold mb-2'>4</h1>
+                            <h1 className=''>Offer Pending</h1>
+                        </div>
+                        {/* --- */}
+                        <div className='px-4 py-4 rounded-2xl w-36 border-b-4 border-b-green-500
+                        bg-green-200 text-center'>
+                            <h1 className='text-4xl font-bold mb-2'>2</h1>
+                            <h1 className=''>Hired</h1>
+                        </div>
                     </div>
                 </div>
             </div>
