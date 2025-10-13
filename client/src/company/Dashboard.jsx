@@ -36,7 +36,11 @@ const Dashboard = () => {
                 </button>
                  <button className='border border-white px-2 py-1 rounded cursor-pointer
                 hover:border-blue-600 active:opacity-80 transition-all duration-200'>
-                    Post New Project
+                    Analytics
+                </button>
+                 <button className='border border-white px-2 py-1 rounded cursor-pointer
+                hover:border-blue-600 active:opacity-80 transition-all duration-200'>
+                    Settings
                 </button>
             </div>
 
@@ -46,6 +50,12 @@ const Dashboard = () => {
                 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent'>
                     Amir Sadik <span className='text-[8px] font-mono text-gray-900 bg-gray-200 p-1 rounded-xl ml-1'>Company</span>
                 </h1>
+                
+                {/* Post new project */}
+                <button className='absolute top-10 right-0 text-white font-medium p-2 rounded bg-blue-600
+                hover:opacity-80 active:opacity-100 cursor-pointer'>
+                    Post new project
+                </button>
 
                 {/* Overview */}
                 <h1 className='text-4xl font-extralight underline'>Overview</h1>
