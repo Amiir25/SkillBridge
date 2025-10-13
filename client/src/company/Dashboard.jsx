@@ -52,9 +52,9 @@ const Dashboard = () => {
                 </h1>
                 
                 {/* Post new project */}
-                <button className='absolute top-10 right-0 text-white font-medium p-2 rounded bg-blue-600
-                hover:opacity-80 active:opacity-100 cursor-pointer'>
-                    Post new project
+                <button className='fixed top-20 right-32 text-white font-medium p-4 bg-blue-600
+                rounded-xl shadow-xl hover:opacity-80 active:opacity-100 cursor-pointer'>
+                    + Post new project
                 </button>
 
                 {/* Overview */}
