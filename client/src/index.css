@@ -16,3 +16,8 @@
     transform: translateY(10px);
   }
 }
+
+/* Company Dashboard Table */
+th, td {
+  padding: 10px 0;
+}
