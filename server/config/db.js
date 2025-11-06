@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
     try {
         if (!process.env.MONGODB_URI){
-            console.error('Missing MONGODB_URI enviroment variable');
+            console.error('Missing MONGODB_URI environment variable');
             process.exit(1);
         }
 
