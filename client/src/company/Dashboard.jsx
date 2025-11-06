@@ -44,6 +44,7 @@ const Dashboard = () => {
                 </button>
             </div>
 
+            {/* --- */}
             <div className='relative flex-4 mt-10 py-10 px-10 h-full'>
                 {/* Full Name */}
                 <h1 className='absolute -top-10 text-2xl flex items-start font-extrabold
@@ -137,7 +138,7 @@ const Dashboard = () => {
                             <tr className='font-medium'>
                                 <td>Data Entry</td>
                                 <td><span className='text-cyan-600 font-bold'>52</span> total </td>
-                                <td className='text-green-800 bg-green-200 rounded-full'>Active</td>
+                                <td className='text-green-800 rounded-full'>Active</td>
                                 <td className='flex items-center justify-center gap-2'>
                                     <span className='text-sky-500'>Manage</span>
                                     <span className='text-red-500'>Close</span>
@@ -147,7 +148,7 @@ const Dashboard = () => {
                             <tr className='font-medium'>
                                 <td>Customer Support</td>
                                 <td><span className='text-cyan-600 font-bold'>48</span> total </td>
-                                <td className='text-green-800 bg-green-200 rounded-full'>Active</td>
+                                <td className='text-green-800 rounded-full'>Active</td>
                                 <td className='flex items-center justify-center gap-2'>
                                     <span className='text-sky-500'>Manage</span>
                                     <span className='text-red-500'>Close</span>
