@@ -19,21 +19,21 @@ const Register = () => {
 
             {/* Form */}
             <form className='mt-8'>
-                <div>
+                {/* <div>
                     <label htmlFor="firstName" className='block text-xl'>First Name</label>
                     <input type="text" id='firstName' placeholder='Enter your first name'
                     className='w-full border border-gray-800/50 p-2 rounded outline-0' />
-                </div>
+                </div> */}
                 
-                <div className='mt-4'>
+                {/* <div className='mt-4'>
                     <label htmlFor="lastName" className='block text-xl'>Last Name</label>
                     <input type="text" id='lastName' placeholder='Enter your last name'
                     className='w-full border border-gray-800/50 p-2 rounded outline-0' />
-                </div>
+                </div> */}
                 
                 <div className='mt-4'>
-                    <label htmlFor="userName" className='block text-xl'>User Name</label>
-                    <input type="text" id='userName' placeholder='Enter your user name'
+                    <label htmlFor="userName" className='block text-xl'>Name</label>
+                    <input type="text" id='userName' placeholder='Enter your name'
                     className='w-full border border-gray-800/50 p-2 rounded outline-0' />
                 </div>
                 
@@ -49,13 +49,13 @@ const Register = () => {
                     className='w-full border border-gray-800/50 p-2 rounded outline-0' />
                 </div>
                 
-                <div className='mt-4'>
+                {/* <div className='mt-4'>
                     <label htmlFor="confirmPassword" className='block text-xl'>Confirm Password</label>
                     <input type="passworld" id='confirmassword' placeholder='Confirm your password'
                     className='w-full border border-gray-800/50 p-2 rounded outline-0' />
-                </div>
+                </div> */}
 
-                <div class="mt-4">
+                <div className="mt-4">
                     <label htmlFor="role" className='block text-xl'>Role</label>
                     <select name="role-selection" id="role"
                     className='w-full border border-gray-800/50 p-2 rounded outline-0'>
