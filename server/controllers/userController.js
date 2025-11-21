@@ -38,11 +38,11 @@ export const register = async (req, res) => {
         });
         await user.save();
 
-        // Check for JWT_SECRET_KEY
-        if (!process.env.JWT_SECRET_KEY) throw new Error('Missing JWT_SECRET_KEY environment variable');
+        // Check for JWT_SECRET
+        if (!process.env.JWT_SECRET) throw new Error('Missing JWT_SECRET environment variable');
         const token = jwt.sign(
             { id: newId.toString() },
-            process.env.JWT_SECRET_KEY,
+            process.env.JWT_SECRET,
             { expiresIn: process.env.TOKEN_EXPIRES_IN },
         )
 
@@ -88,7 +88,7 @@ export const login = async (req, res) => {
         // Log the user in
         const token = jwt.sign(
             { id: user._id.toString() },
-            process.env.JWT_SECRET_KEY,
+            process.env.JWT_SECRET,
             { expiresIn: process.env.TOKEN_EXPIRES_IN },
         )
 
