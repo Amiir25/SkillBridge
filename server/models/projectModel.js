@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    requiredSkills: {
+    skills: {
         type: [String],
         required: true,
     },
@@ -31,6 +31,7 @@ const projectSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['Open', 'Closed'],
+        default: 'Open',
     },
     createdAt: {
         type: Date,
