@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRouter from './routes/authRoutes.js';
+import projectRouter from './routes/projectRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/projects', projectRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to SkillBridge');
