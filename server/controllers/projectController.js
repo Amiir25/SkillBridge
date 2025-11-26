@@ -1,0 +1,63 @@
+import Project from "../models/projectModel.js";
+
+export const createProject = async (req, res) => {
+    try {
+        const{
+            title,
+            description,
+            skills,
+            duration,
+            price,
+            status,
+        } = req.body;
+
+        // Validate fields
+        if (!title || !description || !skills || !duration || !price) {
+            return res.status(400).json({ message: 'All fields are necessary' });
+        }
+
+        // Fetch company Id from request object
+        const companyId = req.user._id;
+
+        // Ensure only companies can post projects
+        if (req.user.role !== 'Company') {
+            return res.status(400).json({ message: 'Only companies can create projects' })
+        }
+
+        // Check if skills is an array
+        if (!Array.isArray(skills)) {
+            return res.status(400).json({ message: 'Skills must be an array' });
+        }
+
+        // Create new project
+        const project = await Project.create({
+            companyId,
+            title,
+            description,
+            skills,
+            duration,
+            price,
+            status,
+        });
+
+        return res.status(201).json({
+            message: 'Project created successfully',
+            project: {
+                id: project._id,
+                companyId: project.companyId,
+                title: project.title,
+                description: project.description,
+                skills: project.skills,
+                duration: project.duration,
+                price: project.price,
+                status: project.status,
+                createdAt: project.createdAt,
+            }
+        })
+
+
+    } catch (error) {
+        console.error('Error while creating new project:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
