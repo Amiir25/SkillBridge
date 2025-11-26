@@ -1,12 +1,16 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import authRouter from './routes/authRoutes.js';
 
 dotenv.config();
 connectDB();
 
 const app = express();
 app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to SkillBridge');
