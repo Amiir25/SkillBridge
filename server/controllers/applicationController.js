@@ -50,3 +50,43 @@ export const applyToProject = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 }
+
+// Company dashboard
+export const compnayDashboard = async (req, res) => {
+    try {
+        // Ensure only companies can access this dashboard
+        if (req.user.role !== 'Company') {
+            return res.status(403).json({ message: 'Only companies can access this dashbaord' });
+        }
+
+        const companyId = req.user._id;
+
+        // Find all projects created by the company
+        const projects = await Project.find({companyId}).sort({ createdAt: -1 });
+
+        // If company has no projects
+        if (projects.length === 0) {
+            return res.status(200).json({ message: 'No projects yet', projects: [] });
+        }
+
+        // Fetch applications for all projects
+        const dashboardData = await Promise.all(
+            projects.map(async (project) => {
+                const applications = await Application.find({ projectId: project._id })
+                    .populate('studentId', 'name email university major year')
+                    .sort({ createdAt: -1 });
+
+                return {
+                    project,
+                    applicants: applications
+                }
+            })
+        )
+
+        return res.status(200).json({ message: 'Dashbaord data loaded', data: dashboardData });
+
+    } catch(error) {
+        console.error('Error loading company dashboard:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
