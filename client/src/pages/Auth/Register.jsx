@@ -1,5 +1,5 @@
 import React from 'react'
-import { images } from '../assets/images'
+import { images } from '../../assets/images'
 import { Link } from 'react-router-dom'
 
 const Register = () => {

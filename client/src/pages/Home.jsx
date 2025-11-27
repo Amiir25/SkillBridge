@@ -1,7 +1,6 @@
 import React from 'react'
 import { images } from '../assets/images'
 import { Link } from 'react-router-dom'
-import Logo from '../components/Logo'
 
 const Home = () => {
   return (
@@ -9,8 +8,7 @@ const Home = () => {
     style={{ backgroundImage: `url(${ images.bg })` }}
     className='relative h-screen bg-cover bg-center bg-no-repeat'>
 
-        {/* Logo */}
-        <Logo/>
+        
         
         <div id='hero' className='h-[95vh] w-200 mx-auto flex flex-col justify-center text-center'>
           {/* Titles */}
