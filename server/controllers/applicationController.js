@@ -90,3 +90,29 @@ export const compnayDashboard = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 }
+
+// Student dashboard
+export const studentDashboard = async (req, res) => {
+    try {
+        // Ensure only students can access this dashbaord
+        if (req.user.role !== 'Student') {
+            res.status(403).json({ message: 'Only students can access this dashboard' });
+        }
+
+        const studentId = req.user._id;
+
+        // Find all projects applied by the student
+        const appliedProjects = await Application.find({ studentId }).sort({ createdAt: -1 });
+
+        // If student has no projects
+        if (!appliedProjects) {
+            return res.status(200).json({ message: 'Not projects yet', appliedProjects: [] });
+        }
+
+        return res.status(200).json({ message: 'Dashboard data loaded', data: appliedProjects });
+
+    } catch (error) {
+        console.error('Error loading student dashbaord:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
