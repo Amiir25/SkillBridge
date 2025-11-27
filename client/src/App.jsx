@@ -15,17 +15,6 @@ function App() {
       <Route path='/' element={ <Home/> } />
       <Route path='/login' element={ <Login/> } />
       <Route path='/register' element={ <Register/> } />
-
-      {/* Project */}
-      <Route path='/projects' element={ <Projects/> } />
-      <Route path='/create-project' element={ <CreateProject/> } />
-      <Route path='/apply' element={ <Apply/> } />
-
-      {/* Company */}
-      <Route path='/company-dashboard' element={ <CompanyDashboard/> } />
-      
-      {/* Student */}
-      <Route path='/student-dashboard' element={ <StudentDashboard/> } />
     </Routes>
   )
 }
