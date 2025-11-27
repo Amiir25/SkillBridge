@@ -102,7 +102,16 @@ export const studentDashboard = async (req, res) => {
         const studentId = req.user._id;
 
         // Find all projects applied by the student
-        const appliedProjects = await Application.find({ studentId }).sort({ createdAt: -1 });
+        const appliedProjects = await Application.find({ studentId })
+            .populate({
+                path: "projectId",
+                select: "title companyId description price duration skills status createdAt",
+                populate: {
+                    path: "companyId",
+                    select: "name email"
+                }
+            })
+            .sort({ createdAt: -1 });;
 
         // If student has no projects
         if (!appliedProjects) {
