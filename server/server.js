@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import projectRouter from './routes/projectRoutes.js';
 
+
 dotenv.config();
 connectDB();
 
