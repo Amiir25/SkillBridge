@@ -5,11 +5,11 @@ export const getAllProjects = async (req, res) => {
     try {
         const allProjects = await Project.find().sort({ createdAt: -1 });
 
-        if (!allProjects) {
-            return res.status(400).json({ message: 'No project found. Try again later.' });
+        if (allProjects.length === 0) {
+            return res.status(400).json({ message: 'No project found.', allProjects });
         }
 
-        return res.status(200).json({ message: 'All projects fetched succesfully', allProjects });
+        return res.status(200).json({ message: 'All projects fetched successfully', allProjects });
 
     } catch (error) {
         console.error('Error while fetchinf all projects:', error.message);
@@ -57,7 +57,7 @@ export const createProject = async (req, res) => {
 
         // Ensure only companies can post projects
         if (req.user.role !== 'Company') {
-            return res.status(400).json({ message: 'Only companies can create projects' })
+            return res.status(403).json({ message: 'Only companies can create projects' })
         }
 
         // Check if skills is an array
@@ -118,7 +118,7 @@ export const updateProject = async (req, res) => {
 
         // Ensure only companies can update projects
         if (req.user.role !== 'Company') {
-            return res.status(400).json({ message: 'Only companies can update projects' })
+            return res.status(403).json({ message: 'Only companies can update projects' })
         }
 
         // Check if project exists & belongs to the company
@@ -138,15 +138,8 @@ export const updateProject = async (req, res) => {
 
         const updatedProject = await Project.findByIdAndUpdate(
             id,
-            {
-                title,
-                description,
-                skills,
-                duration,
-                price,
-                status,
-            },
-            { new: true } // return updated project
+            { ...req.body },
+            { new: true, runValidators: true },
         )
 
         return res.status(200).json({
