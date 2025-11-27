@@ -1,5 +1,41 @@
 import Project from "../models/projectModel.js";
 
+// Get all projects
+export const getAllProjects = async (req, res) => {
+    try {
+        const allProjects = await Project.find().sort({ createdAt: -1 });
+
+        if (!allProjects) {
+            return res.status(400).json({ message: 'No project found. Try again later.' });
+        }
+
+        return res.status(200).json({ message: 'All projects fetched succesfully', allProjects });
+
+    } catch (error) {
+        console.error('Error while fetchinf all projects:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Get project detail
+export const projectDetail = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const project = await Project.findById(id);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        return res.status(200).json({ project });
+
+    } catch (error) {
+        console.error('Error while fetching project detail:', error.message);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+// Create project
 export const createProject = async (req, res) => {
     try {
         const{
