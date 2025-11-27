@@ -108,7 +108,6 @@ export const updateProject = async (req, res) => {
             skills,
             duration,
             price,
-            status,
         } = req.body;
 
         // Validate fields
