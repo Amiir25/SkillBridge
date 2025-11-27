@@ -97,3 +97,65 @@ export const createProject = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 }
+
+// Update project
+export const updateProject = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {
+            title,
+            description,
+            skills,
+            duration,
+            price,
+            status,
+        } = req.body;
+
+        // Validate fields
+        if (!title || !description || !skills || !duration || !price) {
+            return res.status(400).json({ message: 'All fields are necessary' });
+        }
+
+        // Ensure only companies can update projects
+        if (req.user.role !== 'Company') {
+            return res.status(400).json({ message: 'Only companies can update projects' })
+        }
+
+        // Check if project exists & belongs to the company
+        const existingProject = await Project.findById(id);
+        if (!existingProject) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        if (existingProject.companyId.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: 'You can only update your own projects' });
+        }
+
+        // Check if skills is an array
+        if (!Array.isArray(skills)) {
+            return res.status(400).json({ message: 'Skills must be an array' });
+        }
+
+        const updatedProject = await Project.findByIdAndUpdate(
+            id,
+            {
+                title,
+                description,
+                skills,
+                duration,
+                price,
+                status,
+            },
+            { new: true } // return updated project
+        )
+
+        return res.status(200).json({
+            message: 'Project updated successfully',
+            project: updatedProject
+        })
+
+    } catch (error) {
+        console.error('Error while updating a project:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
