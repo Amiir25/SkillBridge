@@ -96,7 +96,7 @@ export const studentDashboard = async (req, res) => {
     try {
         // Ensure only students can access this dashbaord
         if (req.user.role !== 'Student') {
-            res.status(403).json({ message: 'Only students can access this dashboard' });
+            return res.status(403).json({ message: 'Only students can access this dashboard' });
         }
 
         const studentId = req.user._id;
@@ -111,11 +111,11 @@ export const studentDashboard = async (req, res) => {
                     select: "name email"
                 }
             })
-            .sort({ createdAt: -1 });;
+            .sort({ createdAt: -1 });
 
         // If student has no projects
-        if (!appliedProjects) {
-            return res.status(200).json({ message: 'Not projects yet', appliedProjects: [] });
+        if (appliedProjects === 0) {
+            return res.status(200).json({ message: 'No projects yet', appliedProjects: [] });
         }
 
         return res.status(200).json({ message: 'Dashboard data loaded', data: appliedProjects });
