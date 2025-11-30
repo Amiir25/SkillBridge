@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import api from '../../utils/axiosConfig.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const Login = () => {
 
     const navigate = useNavigate();
+    const { login }  = useAuth();
 
     // Validation schema
     const schema = yup.object().shape({
@@ -27,8 +29,7 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const res = await api.post('/auth/login', data);
-            // console.log('Login successful', res.data);
+            await login(data);
             navigate('/') // temporary
 
         } catch (error) {
