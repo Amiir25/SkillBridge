@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { images } from '../../assets/images'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,8 @@ const Login = () => {
 
     const navigate = useNavigate();
     const { login }  = useAuth();
+    const [loginError, setLoginError] = useState(null);
+    const timeoutRef = useRef(null);
 
     // Validation schema
     const schema = yup.object().shape({
@@ -33,7 +35,12 @@ const Login = () => {
             navigate('/') // temporary
 
         } catch (error) {
-            console.error('Login error', error.response?.data);
+            const errorMsg = error.response?.data?.message || 'Login failed';
+            setLoginError(errorMsg);
+
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+            timeoutRef.current = setTimeout(() => {setLoginError(null)}, 3000);
         }
     }
 
@@ -41,7 +48,8 @@ const Login = () => {
         <section
         style={{ backgroundImage: `url(${images.bg})` }}
         className='h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center'>
-            <div className='w-[320px] md:w-[480px] h-120 border-5 border-gray-100 rounded-xl px-8 py-10'>
+            <div className='relative w-[320px] md:w-[480px] h-120 border-5 border-gray-100
+            rounded-xl px-8 py-10 overflow-hidden'>
 
                 {/* Logo */}
                 <Link to={'/'}>
@@ -51,6 +59,12 @@ const Login = () => {
 
                 {/* Title */}
                 <h1 className='mt-4 text-lg md:text-xl text-gray-600 text-center'>Sign in to your account</h1>
+
+                {/* Login error */}
+                <p className={`absolute left-0 w-full text-center text-xl tracking-wide bg-red-500 text-white
+                px-4 py-2 rounded ${ loginError ? 'top-0 opacity-100' : '-top-14 opacity-0' } transition-all duration-300`}>
+                    { loginError }
+                </p>
 
                 {/* Form */}
                 <form onSubmit={ handleSubmit(onSubmit) }  className='mt-8'>
