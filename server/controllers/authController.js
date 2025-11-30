@@ -40,6 +40,28 @@ export const registerUser = async (req, res) => {
             role: role || 'Student',
         })
 
+        // Create JWT Payload
+        const payload = {
+            id: user._id,
+            email: user.email,
+            role: user.role,
+        };
+
+        // Create JWT
+        const token = jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.TOKEN_EXPIRES_IN },
+        );
+
+        // Set the HTTP-only Cookie
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+        });
+
         return res.status(201).json({
             message: 'User registered successfully',
             user: {
@@ -116,7 +138,7 @@ export const logout = async (req, res) => {
         res.clearCookie('token', {
             httpOnly: true,
             secure: false,
-            sameSite: 'lax'
+            sameSite: 'strict'
         })
         .status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
