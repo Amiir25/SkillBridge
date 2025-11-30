@@ -13,4 +13,4 @@ const RoleRoute = ({ children, role }) => {
     return children;
 }
 
-export default RoleRoute
+export default RoleRoute;
