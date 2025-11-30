@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import api from '../../utils/axiosConfig.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 const Login = () => {
@@ -31,8 +30,12 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            await login(data);
-            navigate('/') // temporary
+            const loginResponse = await login(data);
+            if (loginResponse.user.role === 'Company') {
+                navigate('/company/dashboard');
+            } else {
+                navigate('/student/dashboard');
+            }
 
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Login failed';
