@@ -8,8 +8,13 @@ export const registerUser = async (req, res) => {
         const { username, email, password, role } = req.body;
 
         // Validate required fields
-        if (!username || !email || !password) {
+        if (!username || !email || !password || !confirmPassword) {
             return res.status(400).json({ message: 'Please fill all the neccessary fields' });
+        }
+
+        // Check confirm password
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Password not match' });
         }
 
         // Check if user exists
