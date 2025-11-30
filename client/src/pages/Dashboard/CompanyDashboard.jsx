@@ -1,14 +1,11 @@
 import React from 'react'
-import Logo from '../components/Logo'
 
-const Dashboard = () => {
+const CompanyDashboard = () => {
   return (
     <section className='pb-60'>
 
         <nav className='relative'>
-            {/* Logo */}
-            <Logo/>
-
+            
             {/* Profile */}
             <div className='absolute top-4 right-4 mr-6 md:mr-12 lg:mr-24 xl:mr-32
             flex items-center gap-2'>
@@ -165,4 +162,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default CompanyDashboard;
