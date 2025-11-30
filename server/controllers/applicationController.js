@@ -52,7 +52,7 @@ export const applyToProject = async (req, res) => {
 }
 
 // Company dashboard
-export const compnayDashboard = async (req, res) => {
+export const companyDashboard = async (req, res) => {
     try {
         // Ensure only companies can access this dashboard
         if (req.user.role !== 'Company') {
