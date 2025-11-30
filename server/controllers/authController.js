@@ -5,10 +5,10 @@ import jwt from 'jsonwebtoken';
 // Register
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body;
+        const { username, email, password, role } = req.body;
 
         // Validate required fields
-        if (!name || !email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).json({ message: 'Please fill all the neccessary fields' });
         }
 
@@ -18,12 +18,18 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
+        // Check if the username is taken
+        const isUsernameTaken = await User.find({ username });
+        if (isUsernameTaken) {
+            return res.status(400).json({ message: 'This username is taken' });
+        }
+
         // Hash passowrd
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // create new user
         const user = await User.create({
-            name,
+            username,
             email,
             password: hashedPassword,
             role: role || 'Student',
@@ -33,7 +39,7 @@ export const registerUser = async (req, res) => {
             message: 'User registered successfully',
             user: {
                 id: user._id,
-                name: user.name,
+                username: user.username,
                 email: user.email,
                 role: user.role,
             }
@@ -96,5 +102,20 @@ export const loginUser = async (req, res) => {
     } catch (error) {
         console.error('Login Error:', error.message);
         return res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+// Logout
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: false, // set true in production with HTTPs
+            sameSite: 'lax'
+        })
+        .status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+        console.error('Logout error:', error.message);
+        return res.status(500).json({ message: 'Server error' });
     }
 }
