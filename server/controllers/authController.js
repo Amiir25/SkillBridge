@@ -19,7 +19,7 @@ export const registerUser = async (req, res) => {
         }
 
         // Check if the username is taken
-        const isUsernameTaken = await User.find({ username });
+        const isUsernameTaken = await User.findOne({ username });
         if (isUsernameTaken) {
             return res.status(400).json({ message: 'This username is taken' });
         }
