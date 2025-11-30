@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 // Register
 export const registerUser = async (req, res) => {
     try {
-        const { username, email, password, role } = req.body;
+        const { username, email, password, confirmPassword, role } = req.body;
 
         // Validate required fields
         if (!username || !email || !password || !confirmPassword) {
@@ -115,7 +115,7 @@ export const logout = async (req, res) => {
     try {
         res.clearCookie('token', {
             httpOnly: true,
-            secure: false, // set true in production with HTTPs
+            secure: false,
             sameSite: 'lax'
         })
         .status(200).json({ message: 'Logged out successfully' });
