@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const CompanyDashboard = () => {
   return (
@@ -50,10 +51,12 @@ const CompanyDashboard = () => {
                 </h1>
                 
                 {/* Post new project */}
-                <button className='fixed top-20 right-32 text-white font-medium p-4 bg-blue-600
-                rounded-xl shadow-xl hover:opacity-80 active:opacity-100 cursor-pointer'>
-                    + Post new project
-                </button>
+                <Link to={ '/create-project' }>
+                    <button className='fixed top-20 right-32 text-white font-medium p-4 bg-blue-600
+                    rounded-xl shadow-xl hover:opacity-80 active:opacity-100 cursor-pointer'>
+                        + Post new project
+                    </button>
+                </Link>
 
                 {/* Overview */}
                 <h1 className='text-4xl font-extrabold underline'>Overview</h1>
