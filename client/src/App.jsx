@@ -5,6 +5,7 @@ import Register from './pages/Auth/Register'
 import RoleRoute from './components/RoleRoute';
 import CompanyDashboard from './pages/Dashboard/CompanyDashboard';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
+import CreateProject from './pages/Project/CreateProject';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
       <Route path='/' element={ <Home/> } />
       <Route path='/login' element={ <Login/> } />
       <Route path='/register' element={ <Register/> } />
+
+      {/* Project routes */}
+      <Route path='/create-project' element={ <CreateProject/> } />
 
       {/* Company dashboard */}
       <Route path='/company/dashboard' element={
