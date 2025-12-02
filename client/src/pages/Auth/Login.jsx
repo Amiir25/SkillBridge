@@ -34,7 +34,7 @@ const Login = () => {
             if (loginResponse.user.role === 'Company') {
                 navigate('/company/dashboard');
             } else {
-                navigate('/student/dashboard');
+                navigate('/projects');
             }
 
         } catch (error) {
