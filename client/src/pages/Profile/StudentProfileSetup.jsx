@@ -5,12 +5,29 @@ import { useForm } from 'react-hook-form';
 import api from '../../utils/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const StudentProfileSetup = () => {
 
     const navigate = useNavigate();
     const [setupSuccess, setSetupSuccess] = useState(null);
     const [setupFail, setSetupFail] = useState(null);
+
+    // Check if student has profile
+    useEffect(() => {
+        const checkStudentProfile = async () => {
+            try {
+                const res = await api.get('/profile/student/me');
+                if (res.data.exists) {
+                    navigate('/student/dashboard');
+                }
+            } catch (error) {
+                console.error('Profile check failed');
+            }
+        }
+
+        checkStudentProfile();
+    })
 
     // Validation schema
     const schema = yup.object().shape({
