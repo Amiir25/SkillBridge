@@ -1,4 +1,4 @@
-import StudentProfile from "../models/studentProfileModel.js";
+import StudentProfile from "../../models/studentProfileModel.js";
 
 // Check if student profile exists
 export const checkStudentProfile = async (req, res) => {
@@ -20,7 +20,7 @@ export const checkStudentProfile = async (req, res) => {
 }
 
 // Create student profile
-export const studentProfile = async (req, res) => {
+export const createStudentProfile = async (req, res) => {
     try {
         
         const {
