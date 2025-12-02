@@ -1,4 +1,5 @@
 import Project from "../models/projectModel.js";
+import Application from '../models/applicationModel.js';
 
 // Get all projects
 export const getAllProjects = async (req, res) => {
@@ -9,7 +10,18 @@ export const getAllProjects = async (req, res) => {
             return res.status(400).json({ message: 'No project found.', allProjects });
         }
 
-        return res.status(200).json({ message: 'All projects fetched successfully', allProjects });
+        // Fetch applicants for each project
+        const projectsWithApplicants = await Promise.all(
+            allProjects.map(async (project) => {
+                const applicants = await Application.countDocuments({ projectId: project._id });
+                return {...project._doc, applicants};
+            })
+        )
+
+        return res.status(200).json({
+            message: 'All projects fetched successfully',
+            allProjects: projectsWithApplicants,
+        });
 
     } catch (error) {
         console.error('Error while fetchinf all projects:', error.message);
