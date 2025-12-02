@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/authRoutes.js';
 import projectRouter from './routes/projectRoutes.js';
 import applicationRouter from './routes/applicationRoutes.js';
+import profileRouter from './routes/profileRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/projects', projectRouter);
 app.use('/api/applications', applicationRouter);
+app.use('/api/profile', profileRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to SkillBridge');
