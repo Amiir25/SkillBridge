@@ -115,9 +115,16 @@ export const loginUser = async (req, res) => {
             { expiresIn: process.env.TOKEN_EXPIRES_IN },
         )
 
+        // Set the http-only cookie
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+        });
+
         return res.status(201).json({
             message: 'Login successful',
-            token,
             user: {
                 id: user._id,
                 name: user.name,
