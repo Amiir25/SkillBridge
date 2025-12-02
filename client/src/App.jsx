@@ -7,6 +7,7 @@ import CompanyDashboard from './pages/Dashboard/CompanyDashboard';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
 import CreateProject from './pages/Project/CreateProject';
 import Projects from './pages/Project/Projects';
+import StudentProfileSetup from './pages/Profile/StudentProfileSetup';
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         </RoleRoute>
       }/>
       
-      {/* Student dashboard */}
+      {/* Student */}
+      <Route path='/student/profile-setup' element={ <StudentProfileSetup/> } />
       <Route path='/student/dashboard' element={
         <RoleRoute role='Student'>
           <StudentDashboard />
