@@ -27,7 +27,7 @@ const StudentProfileSetup = () => {
         }
 
         checkStudentProfile();
-    })
+    }, [])
 
     // Validation schema
     const schema = yup.object().shape({
