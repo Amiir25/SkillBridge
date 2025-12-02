@@ -1,5 +1,25 @@
 import StudentProfile from "../models/studentProfileModel.js";
 
+// Check if student profile exists
+export const checkStudentProfile = async (req, res) => {
+    try {
+        // Get student Id
+        const studentId = req.user._id;
+
+        // Check profile setup
+        const profile = await StudentProfile.findOne({ studentId });
+        if (!profile) {
+            return res.status(200).json({ exists: false  });
+        }
+
+        return res.status(200).json({ exists: true, profile });
+
+    } catch (error) {
+        return  res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Create student profile
 export const studentProfile = async (req, res) => {
     try {
         
