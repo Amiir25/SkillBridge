@@ -33,6 +33,11 @@ const projectSchema = new mongoose.Schema({
         enum: ['Open', 'Closed'],
         default: 'Open',
     },
+    applicants: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
