@@ -30,12 +30,8 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const loginResponse = await login(data);
-            if (loginResponse.user.role === 'Company') {
-                navigate('/company/dashboard');
-            } else {
-                navigate('/projects');
-            }
+            await login(data);
+            navigate('/projects');
 
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Login failed';
