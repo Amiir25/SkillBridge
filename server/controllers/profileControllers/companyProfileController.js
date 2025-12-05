@@ -1,4 +1,4 @@
-import CompanyProfile from "../../models/companyProfileModel";
+import CompanyProfile from "../../models/companyProfileModel.js";
 
 // Check if company profile exists
 export const checkCompanyProfile = async (req, res) => {
