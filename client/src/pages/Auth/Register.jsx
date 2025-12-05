@@ -51,9 +51,9 @@ const Register = () => {
             // Redirect
             const loginResponse = await login(loginData);
             if (loginResponse.user.role === 'Company') {
-                navigate('/company/dashboard');
+                navigate('/company/profile-setup');
             } else {
-                navigate('/student/dashboard');
+                navigate('/student/profile-setup');
             }
     
         } catch (error) {
