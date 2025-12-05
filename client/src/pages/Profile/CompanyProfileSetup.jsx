@@ -34,7 +34,7 @@ const CompanyProfileSetup = () => {
         companyName: yup.string().required(),
         description: yup.string().required(),
         location: yup.string().required(),
-        companySize: yup.string().oneOf(['Small', 'Medium', 'Large']),
+        companySize: yup.string().oneOf(['Small', 'Medium', 'Large']). default(''),
         industry: yup.string(),
         website: yup.string(),
     })
@@ -46,7 +46,7 @@ const CompanyProfileSetup = () => {
     // Submit form
     const onSubmit = async (data) => {
         try {
-            await api.post('/profile/company/profile-setup', formattedData);
+            await api.post('/profile/company/profile-setup', data);
             setSetupSuccess('Profile saved successfully');
             setTimeout(() => {
                 setSetupSuccess(null);
@@ -83,7 +83,7 @@ const CompanyProfileSetup = () => {
                     {/* Company Name */}
                     <div className='mt-4'>
                         <label htmlFor="companyName" className='block md:text-xl'>Company Name</label>
-                        <input type="text" id='companyName' placeholder='Ex. Jon'
+                        <input type="text" id='companyName' placeholder='Ex. Altra PLC'
                         className={`mt-2 w-full px-1 py-4 rounded-xl outline-0 border border-gray-400
                         ${ errors.companyName && `border border-red-500 shadow shadow-red-300
                         transition-all duration-500 ` }`}
@@ -93,7 +93,7 @@ const CompanyProfileSetup = () => {
                     {/* Description */}
                     <div className='mt-4'>
                         <label htmlFor="description" className='block md:text-xl'>Description</label>
-                        <textarea id="description" rows={3} placeholder="Ex. I'm a graphic designer specializing in..."
+                        <textarea id="description" rows={3} placeholder="Write a short description about your company..."
                         className={`mt-2 w-full p-1 rounded-xl outline-0 border border-gray-400
                         ${ errors.description && `border border-red-500 shadow shadow-red-300
                         transition-all duration-500 ` }`}
@@ -126,7 +126,7 @@ const CompanyProfileSetup = () => {
                     {/* Industry */}
                     <div className='mt-4'>
                         <label htmlFor="industry" className='block md:text-xl'>Industry <span className='text-sm'> (Optional)</span></label>
-                        <input type="text" id='industry' placeholder='Put the link to your portfolio website here...'
+                        <input type="text" id='industry' placeholder='Ex. Technology'
                         className={`mt-2 w-full px-1 py-4 rounded-xl outline-0 border border-gray-400
                         ${ errors.industry && `border border-red-500 shadow shadow-red-300
                         transition-all duration-500 ` }`}
@@ -136,7 +136,7 @@ const CompanyProfileSetup = () => {
                     {/* Website */}
                     <div className='mt-4'>
                         <label htmlFor="website" className='block md:text-xl'>Website <span className='text-sm'> (Optional)</span></label>
-                        <input type="text" id='website' placeholder='Put Google Drive/Canva link of your resume here...'
+                        <input type="text" id='website' placeholder='Ex. altraplc.com'
                         className={`mt-2 w-full px-1 py-4 rounded-xl outline-0 border border-gray-400
                         ${ errors.website && `border border-red-500 shadow shadow-red-300
                         transition-all duration-500 ` }`}
