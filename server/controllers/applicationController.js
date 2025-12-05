@@ -1,5 +1,7 @@
 import Application from "../models/applicationModel.js";
+import CompanyProfile from "../models/companyProfileModel.js";
 import Project from "../models/projectModel.js";
+import User from "../models/userModel.js";
 
 // appy to project
 export const applyToProject = async (req, res) => {
@@ -32,7 +34,6 @@ export const applyToProject = async (req, res) => {
             studentId: req.user._id,
             projectId: projectId,
         });
-
         if (alreadyApplied) {
             return res.status(400).json({ message: 'You already applied for this job' });
         }
@@ -42,6 +43,9 @@ export const applyToProject = async (req, res) => {
             studentId: req.user._id,
             projectId,
         });
+
+        // Add number of applicants by 1
+        await Project.findByIdAndUpdate(projectId, { $inc: { applicants: 1 } }, { new: true });
 
         return res.status(201).json({ message: 'Application submitted successfully', application });
 
@@ -61,29 +65,21 @@ export const companyDashboard = async (req, res) => {
 
         const companyId = req.user._id;
 
+        // Get comany data from users collection
+        const companyData = await User.findById(companyId).select('-password');
+
+        // Get company profile from companyProfile collection
+        const companyProfile = await CompanyProfile.findOne({ companyId });
+
         // Find all projects created by the company
         const projects = await Project.find({companyId}).sort({ createdAt: -1 });
 
-        // If company has no projects
-        if (projects.length === 0) {
-            return res.status(200).json({ message: 'No projects yet', projects: [] });
-        }
-
-        // Fetch applications for all projects
-        const dashboardData = await Promise.all(
-            projects.map(async (project) => {
-                const applications = await Application.find({ projectId: project._id })
-                    .populate('studentId', 'name email university major year')
-                    .sort({ createdAt: -1 });
-
-                return {
-                    project,
-                    applicants: applications
-                }
-            })
-        )
-
-        return res.status(200).json({ message: 'Dashbaord data loaded', data: dashboardData });
+        return res.status(200).json({
+            message: 'Dashbaord data loaded',
+            companyData,
+            companyProfile,
+            projects: projects
+        });
 
     } catch(error) {
         console.error('Error loading company dashboard:', error.message);
