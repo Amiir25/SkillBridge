@@ -1,6 +1,10 @@
 import Project from "../models/projectModel.js";
 import Application from '../models/applicationModel.js';
 
+/**********************
+/* Public Controllers
+/*********************/
+
 // Get all projects
 export const getAllProjects = async (req, res) => {
     try {
@@ -46,6 +50,10 @@ export const projectDetail = async (req, res) => {
         return res.status(500).json({ message: 'Server Error' });
     }
 }
+
+/**********************
+/* Protected Controllers
+/*********************/
 
 // Create project
 export const createProject = async (req, res) => {
@@ -107,6 +115,35 @@ export const createProject = async (req, res) => {
     } catch (error) {
         console.error('Error while creating new project:', error.message);
         return res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Close project
+export const closeProject = async (req, res) => {
+    try {
+        // Get project Id
+        const { id } = req.params;
+
+        // Find the project
+        const project = await Project.findById(id);
+        if (!project) {
+            return res.status(401).json({ message: 'Project not found' });
+        }
+
+        // Close the project
+        const updatedProject = await Project.findByIdAndUpdate(
+            id,
+            { $set: { status: 'Closed' } },
+            { new: true }
+        );
+
+        return res.status(200).json({
+            message: 'Project closed.',
+            project: updatedProject,
+        });
+
+    } catch (error) {
+
     }
 }
 
@@ -191,6 +228,26 @@ export const deleteProject = async (req, res) => {
 
     } catch (error) {
         console.error('Error while deleting project:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Manage projects
+export const manageProjects = async (req, res) => {
+    try {
+        // Get company Id
+        const companyId = req.user._id
+
+        // Get company's projects
+        const projects = await Project.find({ companyId: companyId });
+        if (!projects) {
+            return res.status(200).json({ message: 'Company has no projects', projects: projects });
+        }
+
+        return res.status(200).json({ message: `Company has ${projects.length} projects`, projects: projects });
+
+    } catch (error) {
+        console.error('Error fetching company projects:', error.message);
         return res.status(500).json({ message: 'Server error' });
     }
 }
