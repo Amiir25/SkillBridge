@@ -3,15 +3,17 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import api from '../../utils/axiosConfig';
 import { useAuth } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Projects = () => {
 
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [allProjects, setAllProjects] = useState([]);
 
-    // Fetch all projects
     useEffect(() => {
+
+        // Fetch all projects
         const fetchProjects = async () => {
             try {
                 const res = await api.get('/projects');
@@ -22,9 +24,10 @@ const Projects = () => {
         }
 
         fetchProjects();
+
     }, []);
 
-    // Customise test based on No of applicants
+    // Customise text based on No of applicants
     const getApplicantText = (n) => {
         if (n === 0) return ('No student applied');
         if (n === 1) return ('1 student applied');
