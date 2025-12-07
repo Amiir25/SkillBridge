@@ -1,4 +1,7 @@
+import Application from "../../models/applicationModel.js";
 import CompanyProfile from "../../models/companyProfileModel.js";
+import Project from "../../models/projectModel.js";
+import User from "../../models/userModel.js";
 
 // Check if company profile exists
 export const checkCompanyProfile = async (req, res) => {
@@ -47,6 +50,61 @@ export const createCompanyProfile = async (req, res) => {
         }
 
         console.error('Error saving company profile:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Update company profile
+export const updateCompanyProfile = async (req, res) => {
+    try {
+        // Get company Id
+        const companyId = req.user._id;
+
+        const { companyName, description, location, companySize, industry, website } = req.body;
+
+        // Validate fields
+        if (!companyName || !description || !location || !industry) {
+            return res.status(400).json({ message: 'Fill all the required fields' });
+        }
+
+        const updatedProfile = await CompanyProfile.findOneAndUpdate(
+            { companyId: companyId },
+            { ...req.body },
+            { new: true, runValidators: true },
+        )
+
+        return res.status(200).json({
+            message: 'Profile updated successfully',
+            updatedProfile
+        })
+
+    } catch (error) {
+        console.error('Error while updating company profile:', error.message);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}
+
+// Delete company profile / account
+export const deleteCompanyProfile = async (req, res) => {
+    try {
+        const companyId = req.user._id;
+
+        // Delete company data
+        await User.findOneAndDelete({ _id: companyId });
+
+        // Delete company profile
+        await CompanyProfile.findOneAndDelete({ companyId: companyId });
+
+        // Delete company projects
+        await Project.findOneAndDelete({ companyId: companyId });
+
+        // Delete projects from application model
+        await Application.findOneAndDelete({ companyId: companyId });
+
+        return res.status(200).json({ message: 'Account deleted' });
+
+    } catch (error) {
+        console.error('Error deleting user account:', error);
         return res.status(500).json({ message: 'Server error' });
     }
 }
