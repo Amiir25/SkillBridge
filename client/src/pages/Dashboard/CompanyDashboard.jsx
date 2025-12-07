@@ -1,79 +1,35 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import api from '../../utils/axiosConfig.js';
-import { useAuth } from '../../context/AuthContext.jsx';
-import { sidebarBtns } from '../../assets/company/dashboard.js';
+import { Link } from 'react-router-dom';
 import CloseProject from '../Project/CloseProject.jsx';
 import UpdateProject from '../Project/UpdateProject.jsx';
+import DashboardSidebar from './DashboardSidebar.jsx';
+import { useDashboardData } from './useDashboardData.jsx';
 
 const CompanyDashboard = () => {
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { user } = useAuth();
-
-    const [companyData, setCompanyData] = useState(null);
-    const [companyProfile, setCompanyProfile] = useState(null);
-    const [projects, setProjects] = useState(null);
-
-    // Fetch company data
-    useEffect(() => {
-
-        if (!user) return;
-        
-        const fetchCompanyData = async () => {
-            try {
-                const res = await api.get('/applications/company/dashboard');
-                const company = res.data;
-                console.log('Company:', company)
-
-                setCompanyData(company.companyData);
-                setCompanyProfile(company.companyProfile);
-                if (company.projects) setProjects(company.projects); // For non-empty project
-
-            } catch (error) {
-                console.error('Error fetching company data:', error.response?.data?.message);
-            }
-        }
-
-        // Check if company has a profile
-        const checkUserProfile = async () => {
-            try {
-                const role = user.role;
-                const res = await api.get(`/profile/${role}/me`);
-
-                if (!res.data.exists) {
-                    navigate(`/${role}/profile-setup`);
-                    return
-                }
-
-                fetchCompanyData();
-
-            } catch (error) {
-                console.error('Failed profile check');
-            }
-        }
-
-        checkUserProfile();
-
-    }, [user])
-
-    // Calculate active projects
-    const activeProjects = projects?.filter(p => p.status === 'Open').length || 0;
+    // Get user data from useDashboardData hook
+    const {
+        userData: companyData,
+        userProfile: companyProfile,
+        userProjects: companyProjects,
+        isLoading,
+        refreshData // function to refresh data
+    } = useDashboardData();
+    
+    const activeProjects = companyProjects?.filter(p => p.status === 'Open');
 
     // Handle project closing
     const [closedProject, setClosedProject] = useState(null);
     const handleProjectClose = () => {
         setClosedProject(null);
-        window.location.reload();
+        refreshData();
     }
 
     // Handle project updating
     const [updatedProject, setUpdatedProject] = useState(null);
     const handleProjectUpdate = () => {
         setUpdatedProject(null);
-        window.location.reload();
+        refreshData();
     }
 
     // Handle popups
@@ -82,55 +38,33 @@ const CompanyDashboard = () => {
         setUpdatedProject(null);
     }
 
+    // Render logic (Loading state)
+    if (isLoading || !companyData) {
+        return (
+        <div className='flex items-center justify-center h-screen md:text-2xl font-semibold
+        tracking-wide animate-pulse'>
+            Loading Dashboard Data...
+        </div>
+        )
+    }
+
     return (
         <section className=''>
 
             <div className=' h-screen flex items-start'>
 
                 {/* Side bar */}
-                <div className='flex-1 h-full ml-2 py-10 border-r border-gray-400'>
-
-                    {/* Profile */}
-                    <div className='flex gap-4'>
-                        <h1 className='border w-10 h-10 rounded-full text-xl flex items-center justify-center
-                        text-white bg-gradient-to-r from-blue-600 to-green-600'>
-                            { companyProfile?.companyName[0] || 'C' }
-                        </h1>
-                        
-                        <div className=''>
-                            {/* Full Name */}
-                            <h1 className='text-xl font-semibold'>
-                                { companyProfile?.companyName }
-                            </h1>
-                            <p className='text-xs font-mono text-gray-900 bg-gray-200 px-2 py-1
-                            rounded-xl w-fit tracking-wide'>
-                                    { companyData?.role }
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Sidebar buttons */}
-                    <div className='mt-10 flex flex-col items-start gap-4 text-lg'>
-                        {
-                            sidebarBtns.map((btn, i) => (
-                                <Link key={i} to={`${btn.path}`}>
-                                    <button className={`border border-transparent px-2 py-1 rounded cursor-pointer
-                                    hover:border-blue-600 active:opacity-80 transition-all duration-200
-                                    ${ location.pathname.includes(`${btn.id}`) && 'bg-blue-600 text-white' }`}>
-                                        { btn.name }
-                                    </button>
-                                </Link>
-                            ))
-                        }
-                    </div>
-                </div>
+                <DashboardSidebar
+                    userData={ companyData }
+                    userProfile={ companyProfile }
+                />
 
                 {/* --- */}
-                <div className='relative flex-3 py-10 px-10 h-full'>
+                <div className='relative flex-3 p-10 h-full'>
                     
                     {/* Post new project */}
                     <Link to={ '/create-project' }>
-                        <button className='fixed top-8 right-32 text-white font-medium p-4 bg-blue-600
+                        <button className='fixed top-4 right-12 text-white font-medium p-4 bg-blue-600
                         rounded-xl shadow-xl hover:opacity-80 active:opacity-100 cursor-pointer'>
                             + Post new project
                         </button>
@@ -138,20 +72,20 @@ const CompanyDashboard = () => {
 
                     {/* Overview */}
                     <h1 className='text-4xl font-extrabold underline'>Overview</h1>
-                    <div className='mt-6 flex items-center gap-10 '>
+                    <div className='mt-6 flex items-center justify-between gap-10 '>
 
                         <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-sky-500 shadow-xl'>
-                            <h1 className='text-5xl font-bold mb-2'>{ projects?.length || 0 }</h1>
+                            <h1 className='text-5xl font-bold mb-2'>{ companyProjects?.length || 0 }</h1>
                             <h1 className='text-xl'>Projects Posted</h1>
                         </div>
 
                         <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-indigo-500 shadow-xl'>
-                            <h1 className='text-5xl font-bold mb-2'>{ projects?.applicants || 0 }</h1>
+                            <h1 className='text-5xl font-bold mb-2'>{ companyProjects?.applicants || 0 }</h1>
                             <h1 className='text-xl'>Applications Received</h1>
                         </div>
                         
                         <div className='px-8 py-4 rounded-2xl w-fit border-t-4 border-cyan-500 shadow-xl'>
-                            <h1 className='text-5xl font-bold mb-2'>{ activeProjects }</h1>
+                            <h1 className='text-5xl font-bold mb-2'>{ activeProjects?.length }</h1>
                             <h1 className='text-xl'>Active Posts</h1>
                         </div>
                     </div>
@@ -197,7 +131,7 @@ const CompanyDashboard = () => {
                     <div className='mt-20 px-2 py-6 rounded-xl shadow'>
                         <h1 className='text-4xl font-extrabold underline'>Active Project Postings</h1>
                         {
-                            !projects
+                            !activeProjects
                             ?
                             <div>
                                 <p className='mt-10 text-gray-600 tracking-wide'>There are no active projects.</p>
@@ -214,11 +148,13 @@ const CompanyDashboard = () => {
                                 </thead>
                                 <tbody className='text-center'>
                                     {
-                                        projects.filter(p => p.status === 'Open').map((project, i) => (
+                                        activeProjects.map((project, i) => (
                                             <tr key={i}>
                                                 <td>{ project.title }</td>
                                                 <td><span className='text-cyan-600 font-bold'>{ project.applicants.length }</span> total </td>
-                                                <td className='text-green-800 rounded-full'>{ project.status }</td>
+                                                <td className='text-green-800 rounded-full'>
+                                                    <span className='px-2 py-1 bg-green-500 text-white rounded'>{ project.status }</span>
+                                                </td>
                                                 <td className='flex items-center justify-center gap-2'>
                                                     
                                                     <button
