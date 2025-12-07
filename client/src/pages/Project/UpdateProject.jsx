@@ -9,8 +9,8 @@ import { useState } from 'react';
 const UpdateProject = ({ project, onReturn, onProjectUpdate }) => {
 
     const navigate = useNavigate();
-    const [postSuccess, setPostSuccess] = useState(null);
-    const [postFail, setPostFail] = useState(null);
+    const [updateSuccess, setUpdateSuccess] = useState(null);
+    const [updateFail, setUpdateFail] = useState(null);
 
     // Validation schema
     const schema = yup.object().shape({
@@ -43,17 +43,17 @@ const UpdateProject = ({ project, onReturn, onProjectUpdate }) => {
                 skills: data.skills.split(',').map(s => s.trim()),
             }
             await api.put(`/projects/update-project/${project._id}`, formattedData);
-            setPostSuccess('Project updated successfully');
+            setUpdateSuccess('Project updated successfully');
             setTimeout(() => {
-                setPostSuccess(null);
+                setUpdateSuccess(null);
                 onProjectUpdate();
             }, 2000);
 
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Project updating failed!';
-            setPostFail(errorMsg);
+            setUpdateFail(errorMsg);
             setTimeout(() => {
-                setPostFail(null);
+                setUpdateFail(null);
                 onReturn();
             }, 2000);
         }
@@ -81,9 +81,9 @@ const UpdateProject = ({ project, onReturn, onProjectUpdate }) => {
 
                 {/* Post message */}
                 <p className={`fixed -top-10 opacity-0 left-1/2 -translate-1/2 w-full md:w-[600px] text-center text-white py-4 rounded-xl
-                ${ postSuccess && 'top-10 bg-green-500 opacity-100' } ${ postFail && 'top-10 bg-red-500 opacity-100' }
+                ${ updateSuccess && 'top-10 bg-green-500 opacity-100' } ${ updateFail && 'top-10 bg-red-500 opacity-100' }
                 transition-all duration-300`}>
-                    { postSuccess ? postSuccess : postFail }
+                    { updateSuccess ? updateSuccess : updateFail }
                 </p>
 
                 {/* Form */}
