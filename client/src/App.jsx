@@ -8,8 +8,9 @@ import StudentDashboard from './pages/Dashboard/StudentDashboard';
 import CreateProject from './pages/Project/CreateProject';
 import Projects from './pages/Project/Projects';
 import StudentProfileSetup from './pages/Profile/StudentProfileSetup';
-import CompanyProfileSetup from './pages/Profile/CompanyProfileSetup';
+import CompanyProfileSetup from './pages/Profile/Company/CompanyProfileSetup';
 import ManageProjects from './pages/Project/ManageProjects';
+import CompanyProfile from './pages/Profile/Company/CompanyProfile';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path='/company/manage-projects' element={ <ManageProjects/> } />
 
       {/* Company */}
+      <Route path='/company/profile' element={ <CompanyProfile/> } />
       <Route path='/company/profile-setup' element={ <CompanyProfileSetup/> } />
       <Route path='/company/dashboard' element={
         <RoleRoute role='Company'>
