@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import api from '../../utils/axiosConfig'
 import CloseProject from './CloseProject';
 import UpdateProject from './UpdateProject';
+import { useDashboardData } from '../Dashboard/useDashboardData';
+import DashboardSidebar from '../Dashboard/DashboardSidebar';
 
 const ManageProjects = () => {
 
-    const [companyProjects, setCompanyProjects] = useState(null);
-
-    useEffect(() => {
-        const fetchCompanyProjects = async () => {
-            try {
-                const res = await api.get('/projects/manage-projects');
-                console.log(res.data);
-                setCompanyProjects(res.data.projects);
-            } catch (error) {
-                console.error('Error fetching company projects:', error.response?.data?.message);
-            }
-        }
-
-        fetchCompanyProjects();
-    }, []);
+    // Get user data from useDashboardData hook
+    const {
+        userData: companyData,
+        userProfile: companyProfile,
+        userProjects: companyProjects,
+        isLoading,
+        refreshData,
+    } = useDashboardData();
 
     // Handle Project closing
     const [closedProject, setClosedProject] = useState(null);
     const handleProjectClose = () => {
         setClosedProject(null);
-        window.location.reload();
+        refreshData();
     }
 
     // Handle project updating
     const [updatedProject, setUpdatedProject] = useState(null);
     const handleProjectUpdate = () => {
         setUpdatedProject(null);
-        window.location.reload();
+        refreshData();
     }
 
     // Handle popup screens
@@ -41,17 +35,34 @@ const ManageProjects = () => {
         setUpdatedProject(null);
     }
 
+    // Render logic (Loading state)
+    if (isLoading || !companyData) {
+        return (
+        <div className='flex items-center justify-center h-screen md:text-2xl font-semibold
+        tracking-wide animate-pulse'>
+            Loading Projects...
+        </div>
+        )
+    }
+
     return (
-        <section className='px-6 md:px-12 lg:px-24 xl:px-32'>
-            <div className='mt-20 grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <section className='flex items-start h-screen'>
+
+            {/* Dashboard sidebar */}
+            <DashboardSidebar
+                userData={ companyData }
+                userProfile={ companyProfile }
+            />
+
+            <div className='flex-3 p-10 grid grid-cols-1 md:grid-cols-2 gap-8'>
                 {
                     companyProjects?.map((project, i) => (
                         <div key={i} className='relative bg-blue-100 p-2 rounded-xl h-[380px]'>
 
                             <div>
                                 
-                                <div className={`absolute top-0 right-0 text-white text-sm px-2 py-1 rounded-b-xl
-                                ${ project.status === 'Open' ? 'bg-green-600' : 'bg-gray-600' } `}>
+                                <div className={`absolute top-0 right-0 text-white text-sm px-2 py-1
+                                ${ project.status === 'Open' ? 'bg-green-600' : 'bg-gray-500' } `}>
                                     { project.status }
                                 </div>
 
@@ -78,7 +89,7 @@ const ManageProjects = () => {
                                 
                             </div>
 
-                            <div className='absolute bottom-4 left-4 right-4'>
+                            <div className='absolute bottom-4 left-14 right-14'>
                                 {/* Buttons */}
                                 <div className='w-full mt-10 flex items-center justify-center gap-2'>
                                 
