@@ -1,12 +1,14 @@
 import Application from "../models/applicationModel.js";
 import CompanyProfile from "../models/companyProfileModel.js";
 import Project from "../models/projectModel.js";
+import StudentProfile from "../models/studentProfileModel.js";
 import User from "../models/userModel.js";
 
 // appy to project
 export const applyToProject = async (req, res) => {
     try {
         const { projectId } = req.params;
+        const { studentId } = req.user._id;
 
         // Ensure only students can appy
         if (req.user.role !== 'Student') {
@@ -25,13 +27,13 @@ export const applyToProject = async (req, res) => {
         }
 
         // Prevent company from applying to their projects
-        if (project.companyId.toString() === req.user._id.toString()) {
+        if (project.companyId.toString() === studentId.toString()) {
             return res.status(403).json({ message: 'You can not apply to your own projects' });
         }
 
         // Check duplicate application
         const alreadyApplied = await Application.findOne({
-            studentId: req.user._id,
+            studentId: studentId,
             projectId: projectId,
         });
         if (alreadyApplied) {
@@ -40,12 +42,15 @@ export const applyToProject = async (req, res) => {
 
         // Create application
         const application = await Application.create({
-            studentId: req.user._id,
+            studentId: studentId,
             projectId,
         });
 
-        // Add number of applicants by 1
+        // Add number of applicants by 1 for project
         await Project.findByIdAndUpdate(projectId, { $inc: { applicants: 1 } }, { new: true });
+
+        // Add number of applied proejcts by 1 for student
+        await StudentProfile.findByIdAndUpdate(studentId, { $inc: { appliedProjects: 1 } }, { new: true });
 
         return res.status(201).json({ message: 'Application submitted successfully', application });
 
@@ -76,8 +81,8 @@ export const companyDashboard = async (req, res) => {
 
         return res.status(200).json({
             message: 'Dashbaord data loaded',
-            companyData,
-            companyProfile,
+            userData: companyData,
+            userProfile: companyProfile,
             projects: projects
         });
 
@@ -97,24 +102,21 @@ export const studentDashboard = async (req, res) => {
 
         const studentId = req.user._id;
 
-        // Find all projects applied by the student
-        const appliedProjects = await Application.find({ studentId })
-            .populate({
-                path: "projectId",
-                select: "title companyId description price duration skills status createdAt",
-                populate: {
-                    path: "companyId",
-                    select: "name email"
-                }
-            })
-            .sort({ createdAt: -1 });
+        // Get student data from User collection
+        const studentData = await User.findById(studentId).select('-password');
 
-        // If student has no projects
-        if (appliedProjects === 0) {
-            return res.status(200).json({ message: 'No projects yet', appliedProjects: [] });
-        }
+        // Get student profile from studentProfile collection
+        const studentProfile = await StudentProfile.findOne({ studentId });
 
-        return res.status(200).json({ message: 'Dashboard data loaded', data: appliedProjects });
+        // Get all projects the student applied for
+        const projects = await Application.findOne({ studentId });
+
+        return res.status(200).json({
+            message: 'Dashboard data loaded',
+            userData: studentData,
+            userProfile: studentProfile,
+            projects: projects,
+        });
 
     } catch (error) {
         console.error('Error loading student dashbaord:', error.message);
