@@ -232,22 +232,23 @@ export const deleteProject = async (req, res) => {
     }
 }
 
-// Manage projects
-export const manageProjects = async (req, res) => {
-    try {
-        // Get company Id
-        const companyId = req.user._id
+// Manage projects (Replaced by useDashboardDasta hook)
 
-        // Get company's projects
-        const projects = await Project.find({ companyId: companyId });
-        if (!projects) {
-            return res.status(200).json({ message: 'Company has no projects', projects: projects });
-        }
+// export const manageProjects = async (req, res) => {
+//     try {
+//         // Get company Id
+//         const companyId = req.user._id
 
-        return res.status(200).json({ message: `Company has ${projects.length} projects`, projects: projects });
+//         // Get company's projects
+//         const projects = await Project.find({ companyId: companyId });
+//         if (!projects) {
+//             return res.status(200).json({ message: 'Company has no projects', projects: projects });
+//         }
 
-    } catch (error) {
-        console.error('Error fetching company projects:', error.message);
-        return res.status(500).json({ message: 'Server error' });
-    }
-}
+//         return res.status(200).json({ message: `Company has ${projects.length} projects`, projects: projects });
+
+//     } catch (error) {
+//         console.error('Error fetching company projects:', error.message);
+//         return res.status(500).json({ message: 'Server error' });
+//     }
+// }
