@@ -17,6 +17,7 @@ const studentProfileSchema = new mongoose.Schema({
         enum: ['1st year', '2nd year', '3rd year', '4th year', '5th year'],
         default: 'Not mentioned',
     },
+    appliedProjects:{ type: Number, required: true, default: 0 },
 
     // Optional fields
     skills: { type: [String], },
